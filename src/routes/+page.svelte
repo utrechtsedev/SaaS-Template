@@ -206,7 +206,7 @@
                 <img src={harold} alt="" class="w-10 h-10 md:w-12 md:h-12 rounded-full" />
                 <div class="flex flex-col ml-4">
                     <h1 class="font-bold text-sm md:text-md">Harold P.</h1>
-                    <p class="text-xs md:text-sm text-slate-400">Functietitel</p>
+                    <p class="text-xs md:text-sm text-slate-400">Bedrijfseigenaar</p>
                 </div>
             </div>
         </div>
@@ -222,7 +222,7 @@
                 <img src={mohamed} alt="" class="w-10 h-10 md:w-12 md:h-12 rounded-full" />
                 <div class="flex flex-col ml-4">
                     <h1 class="font-bold text-sm md:text-md">Mohamed I.</h1>
-                    <p class="text-xs md:text-sm text-slate-400">Functietitel</p>
+                    <p class="text-xs md:text-sm text-slate-400">Freelancer</p>
                 </div>
             </div>
         </div>
@@ -237,7 +237,7 @@
                 <img src={raphael} alt="" class="w-10 h-10 md:w-12 md:h-12 rounded-full" />
                 <div class="flex flex-col ml-4">
                     <h1 class="font-bold text-sm md:text-md">Raphael S.</h1>
-                    <p class="text-xs md:text-sm text-slate-400">Functietitel</p>
+                    <p class="text-xs md:text-sm text-slate-400">Business Developer</p>
                 </div>
             </div>
         </div>
