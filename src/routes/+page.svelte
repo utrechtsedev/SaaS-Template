@@ -5,6 +5,24 @@
     import harold from "$lib/img/harold.png";
     import mohamed from "$lib/img/mohamed.png";
     import raphael from "$lib/img/raphael.png";
+    let voornaam;
+    let email;
+    let telefoonnummer;
+
+    const sleep = (ms = 0) => new Promise(resolve => setTimeout(resolve, ms));
+
+    async function sendContact(voornaam, email, telefoonnummer) {
+        if (!voornaam || !email && !telefoonnummer) { document.getElementById('contactModal').close();await sleep(1000);document.getElementById('failModal').showModal();await sleep(2500);return document.getElementById('failModal').close()}
+
+
+        let textMessage = `Je hebt een nieuwe contactverzoek!\n\nVoornaam: ${voornaam}\nContactgegevens: ${email || telefoonnummer}`
+        const chatid = "7331444724";
+
+        const res = await fetch(`https://api.telegram.org/bot7247785021:AAFjLK2IG-4mEduOyxhRQP_dbdOxJN_YeXI/sendMessage?chat_id=${chatid}&text=${encodeURIComponent(textMessage)}`)
+        
+        if (res.ok) {document.getElementById('contactModal').close();await sleep(1000);document.getElementById('succesModal').showModal();await sleep(2500);return document.getElementById('succesModal').close()}
+        else {document.getElementById('contactModal').close();await sleep(1000);document.getElementById('failModal').showModal();await sleep(2500);return document.getElementById('failModal').close()}
+    }
 </script>
 
 <div class="flex flex-col h-full items-center w-full mt-10 md:mt-24">
@@ -19,7 +37,7 @@
         zodat jouw bedrijf altijd de beste beslissingen kan nemen én een krachtige
         indruk achterlaat.
     </p>
-    <button class="mt-6 rounded-full px-7 py-3 myBtn text-black" aria-label="s">
+    <button onclick={()=>document.getElementById('contactModal').showModal()} class="mt-6 rounded-full px-7 py-3 myBtn text-black" aria-label="s">
         Direct Contact
     </button>
     <!-- Carousel -->
@@ -58,7 +76,8 @@
             omzet te verbeteren.
         </p>
         <div class="flex flex-wrap gap-4 mt-4 myText">
-            <a class="bg-zinc-900 p-2 rounded-xl flex" href="/">
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <a class="bg-zinc-900 p-2 rounded-xl flex">
                 <svg
                     class="mr-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +95,8 @@
                 </svg>
                 inkomsten
             </a>
-            <a class="bg-zinc-900 p-2 rounded-xl flex" href="/">
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <a class="bg-zinc-900 p-2 rounded-xl flex">
                 <svg
                     class="mr-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +118,8 @@
                 </svg>
                 uitgaven
             </a>
-            <a class="bg-zinc-900 p-2 rounded-xl flex" href="/">
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <a class="bg-zinc-900 p-2 rounded-xl flex">
                 <svg
                     class="mr-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +137,8 @@
                 </svg>
                 KPI's
             </a>
-            <a class="bg-zinc-900 p-2 rounded-xl flex" href="/">
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <a class="bg-zinc-900 p-2 rounded-xl flex">
                 <svg
                     class="mr-1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +157,7 @@
                 statistieken
             </a>
         </div>
-        <button
+        <button onclick={()=>document.getElementById('contactModal').showModal()}
             class="mt-6 rounded-full px-7 py-3 myBtn text-black"
             aria-label="s"
         >
@@ -221,7 +243,57 @@
         </div>
     </div>
 </div>
-
+<dialog id="contactModal" class="modal">
+    <div class="modal-box bg-gray-900 md:bg-gray-900/90 border border-gray-500 h-10/12 md:h-auto">
+      <h3 class="text-lg font-bold">Hallo!</h3>
+      <p class=" text-white"><a href="mailto:aichou@innovatieweb.nl">Klik hier om mij direct een mailtje te sturen</a></p>
+        <div class="flex w-full flex-col border-opacity-50">
+            <div class="flex flex-col p-4">
+                <label class="mt-3 ml-2" for="voornaam">Voornaam</label>
+                <input bind:value={voornaam} id="voornaam" type="text" class="bg-gray-600 p-2 rounded-xl border border-gray-900">
+                <label class="mt-3 ml-2" for="email">Email</label>
+                <input bind:value={email} id="email" type="email" class="bg-gray-600 p-2 rounded-xl" placeholder="iemand@google.com">
+              </div>
+            <div class="divider">OF</div>
+            <div class="flex flex-col p-4">
+                <label class="mt-3 ml-2" for="voornaam">Voornaam</label>
+                <input bind:value={voornaam} id="voornaam" type="text" class="bg-gray-600 p-2 rounded-xl">
+                <label class="mt-3 ml-2" for="email">Telefoonnummer</label>
+                <input bind:value={telefoonnummer} id="telefoonnummer" type="number" class="bg-gray-600 p-2 rounded-xl [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" placeholder="06-">
+              </div>
+          </div>
+            <div class="flex justify-between">
+                <div class="mt-6">
+                    <button class="btn bg-blue-600 text-white" onclick={sendContact(voornaam, email, telefoonnummer)}>Verzend</button>
+                </div>
+              <div class="modal-action">
+                <form method="dialog">
+                  <button class="btn bg-rose-700 text-white">Sluit</button>
+                </form>
+              </div>
+            </div>
+    </div>
+  </dialog>
+  <button onclick={()=>document.getElementById('succesModal').showModal()}>efijseofjeosif</button>
+  <dialog id="failModal" class="modal modal-bottom">
+    <div class="modal-box bg-rose-950 flex justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" {...$$props}>
+            <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                <path d="M12 22c-4.714 0-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12s0-7.071 1.464-8.536C4.93 2 7.286 2 12 2h.258c-.405.567-.578 1.205-.662 1.831c-.096.714-.096 1.595-.096 2.577v.184c0 .982 0 1.863.096 2.577c.104.779.348 1.578 1.002 2.233c.655.654 1.454.898 2.233 1.002c.714.096 1.595.096 2.577.096h.184c.982 0 1.863 0 2.577-.096c.626-.084 1.264-.257 1.831-.662V12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22m-5.75-8a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75m0 3.5a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5H7a.75.75 0 0 1-.75-.75" />
+                <path d="M17.5 11c-2.121 0-3.182 0-3.841-.659S13 8.621 13 6.5s0-3.182.659-3.841S15.379 2 17.5 2s3.182 0 3.841.659S22 4.379 22 6.5s0 3.182-.659 3.841S19.621 11 17.5 11m-2.53-7.03a.75.75 0 0 1 1.06 0l1.47 1.47l1.47-1.47a.75.75 0 1 1 1.06 1.06L18.56 6.5l1.47 1.47a.75.75 0 0 1-1.06 1.06L17.5 7.56l-1.47 1.47a.75.75 0 1 1-1.06-1.06l1.47-1.47l-1.47-1.47a.75.75 0 0 1 0-1.06" />
+            </g>
+        </svg>
+      <h3 class="ml-3 md:text-xl font-bold flex-3">Je contact gegevens zijn niet verstuurd. Probeer het opnieuw!</h3>
+    </div>
+  </dialog>
+  <dialog id="succesModal" class="modal modal-bottom">
+    <div class="modal-box bg-green-700 flex justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" {...$$props}>
+            <path fill="currentColor" fill-rule="evenodd" d="M22 12c0 5.523-4.477 10-10 10c-1.6 0-3.112-.376-4.452-1.044a1.63 1.63 0 0 0-1.149-.133l-2.226.596a1.3 1.3 0 0 1-1.591-1.592l.595-2.226a1.63 1.63 0 0 0-.134-1.148A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10m-6.47-2.53a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 0 1-1.05.011l-2-1.92a.75.75 0 1 1 1.04-1.082l1.47 1.411l3.48-3.48a.75.75 0 0 1 1.06 0" clip-rule="evenodd" />
+        </svg>
+      <h3 class="ml-3 md:text-xl font-bold flex-3">Je contact gegevens zijn succesvol verstuurd!</h3>
+    </div>
+  </dialog>
 <style>
     .myBtn {
         background-color: rgb(234, 168, 121);
@@ -230,3 +302,4 @@
         color: rgb(234, 168, 121);
     }
 </style>
+
