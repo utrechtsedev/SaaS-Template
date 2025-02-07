@@ -5,6 +5,10 @@
     import harold from "$lib/img/harold.png";
     import mohamed from "$lib/img/mohamed.png";
     import raphael from "$lib/img/raphael.png";
+    import { slide,scale } from "svelte/transition";
+    import { onMount } from 'svelte';
+    let ready = false;
+    onMount(()=> ready = true)
     let voornaam;
     let email;
     let telefoonnummer;
@@ -26,18 +30,21 @@
 </script>
 
 <div class="flex flex-col h-full items-center w-full mt-10 md:mt-24">
-    <h1
+    {#if ready}
+    <h1 transition:scale={{duration:1000}}
         class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-amber-600 via-indigo-100 to-indigo-400 bg-clip-text text-transparent text-center"
     >
         Van data naar daadkracht.
     </h1>
-    <p class="mt-10 text-center text-gray-400">
+
+    <p transition:scale={{duration:1000}} class="mt-10 text-center text-gray-400">
         Als solopreneur combineer ik doeltreffende dashboards met ijzersterke
         websites, <br />
         zodat jouw bedrijf altijd de beste beslissingen kan nemen én een krachtige
         indruk achterlaat.
     </p>
-    <button onclick={()=>document.getElementById('contactModal').showModal()} class="mt-6 rounded-full px-7 py-3 myBtn text-black" aria-label="s">
+    {/if}
+    <button transition:slide={{duration:1000}} onclick={()=>document.getElementById('contactModal').showModal()} class="mt-6 rounded-full px-7 py-3 myBtn text-black" aria-label="s">
         Direct Contact
     </button>
     <!-- Carousel -->
